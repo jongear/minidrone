@@ -12,6 +12,18 @@ matrix:
       env: HOST_OS=linux
     - os: osx
       env: HOST_OS=osx
+    - os: linux
+      env: HOST_OS=linux
+    - os: osx
+      env: HOST_OS=osx
+    - os: linux
+      env: HOST_OS=linux
+    - os: osx
+      env: HOST_OS=osx
+    - os: linux
+      env: HOST_OS=linux
+    - os: osx
+      env: HOST_OS=osx
 
 branches:
   only:
