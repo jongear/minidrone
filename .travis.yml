@@ -6,17 +6,26 @@ node_js:
   - '8'
   - '10'
 os:
-  # - linux
+  - linux
   - osx
 matrix:
   fast_finish: true
+
+
+matrix:
+  include:
+    - os: linux
+      env: HOST_OS=linux
+    - os: osx
+      env: HOST_OS=osx
 
 branches:
   only:
     - master
 
-# before_install:
-#   - sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
+before_install:
+
+  - if [ ${HOST_OS} = "linux" ]; then sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev; fi
 
 install:
   - npm install
