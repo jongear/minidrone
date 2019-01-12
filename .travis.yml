@@ -5,14 +5,8 @@ node_js:
   - '6'
   - '8'
   - '10'
-os:
-  - linux
-  - osx
 matrix:
   fast_finish: true
-
-
-matrix:
   include:
     - os: linux
       env: HOST_OS=linux

@@ -48,8 +48,7 @@
     "debug": "^2.1.1",
     "keypress": "^0.2.1",
     "lodash": "^4.17.11",
-    "noble": "^1.9.1",
-    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
+    "noble": "^1.9.1"
   },
   "devDependencies": {
     "mocha": "2.2.5",
@@ -58,6 +57,9 @@
     "temporal": "^0.4.0",
     "eslint-config-eta": "^0.0.9",
     "eslint": "^3.19.0"
+  },
+  "optionalDependencies": {
+    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
   },
   "resolutions": {
     "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
