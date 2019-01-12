@@ -1,18 +1,15 @@
+sudo: required
 language: node_js
 node_js:
   - '4'
   - '6'
   - '8'
   - '10'
-sudo: required
-
+os:
+  - linux
+  - osx
 matrix:
-  include:
-    # https://docs.travis-ci.com/user/reference/osx/#os-x-version
-    - os: osx # 10.13
-      osx_image: xcode10
-    - os: osx # 10.13
-      osx_image: xcode9.4
+  fast_finish: true
 
 branches:
   only:
