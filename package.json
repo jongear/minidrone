@@ -47,8 +47,9 @@
   "dependencies": {
     "debug": "^2.1.1",
     "keypress": "^0.2.1",
-    "lodash": "3.9.3",
-    "noble": "^1.8.0"
+    "lodash": "^4.17.11",
+    "noble": "^1.9.1",
+    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
   },
   "devDependencies": {
     "mocha": "2.2.5",
@@ -58,8 +59,8 @@
     "eslint-config-eta": "^0.0.9",
     "eslint": "^3.19.0"
   },
-  "optionalDependencies": {
-    "logitech-dual-action-controller": "git+https://github.com/voodootikigod/node-logitech-dual-action-controller.git"
+  "resolutions": {
+    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
   },
   "repository": {
     "type": "git",

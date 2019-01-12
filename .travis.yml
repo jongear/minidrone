@@ -1,14 +1,22 @@
+language: node_js
+node_js:
+  - '4'
+  - '6'
+  - '8'
+  - '10'
 sudo: required
 dist: trusty
 
-language: node_js
 
-node_js:
-- '4'
-- '6'
+branches:
+  only:
+    - master
 
 before_install:
-  sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
+  - sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
+
+install:
+  - npm install
 
 before_script:
   - npm run lint
