@@ -1,37 +1,56 @@
 sudo: required
 language: node_js
-node_js:
-  - '4'
-  - '6'
-  - '8'
-  - '10'
+
 matrix:
   fast_finish: true
   include:
-    - os: linux
-      env: HOST_OS=linux
-    - os: osx
-      env: HOST_OS=osx
-    - os: linux
-      env: HOST_OS=linux
-    - os: osx
-      env: HOST_OS=osx
-    - os: linux
-      env: HOST_OS=linux
-    - os: osx
-      env: HOST_OS=osx
-    - os: linux
-      env: HOST_OS=linux
-    - os: osx
-      env: HOST_OS=osx
+    #################
+    # Ubuntu Trusty #
+    #################
+
+    - name: "[Trusty] Node.js v6.x"
+      sudo: required
+      dist: trusty
+      before_install:
+        - sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
+      node_js: "6"
+
+    - name: "[Trusty] Node.js v8.x"
+      sudo: required
+      dist: trusty
+      before_install:
+        - sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
+      node_js: "8"
+
+    - name: "[Trusty] Node.js v10.x"
+      sudo: required
+      dist: trusty
+      before_install:
+        - sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
+      node_js: "10"
+  
+    ########
+    # OS X #
+    ########
+
+    - name: "[OSX] Node.js v6.x"
+      os: osx
+      osx_image: xcode9.3
+      node_js: "6"
+
+    - name: "[OSX] Node.js v8.x"
+      os: osx
+      osx_image: xcode9.3
+      node_js: "8"
+
+    - name: "[OSX] Node.js v10.x"
+      os: osx
+      osx_image: xcode9.3
+      node_js: "10"
 
 branches:
   only:
     - master
-
-before_install:
-
-  - if [ ${HOST_OS} = "linux" ]; then sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev; fi
 
 install:
   - npm install
