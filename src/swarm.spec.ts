@@ -1,4 +1,4 @@
-import Swarm from './Swarm'
+import Swarm from './swarm'
 
 jest.mock('noble', () => ({
   on: jest.fn(),
