@@ -1,5 +1,5 @@
 {
-  "name": "minidrone-ble",
+  "name": "minidrone",
   "version": "0.0.0-semantically-released",
   "description": "A library for sending BLE commands to a Mini Drone",
   "main": "lib/index.js",
@@ -11,6 +11,7 @@
     "bluetooth",
     "ble",
     "parrot",
+    "mambo",
     "rolling-spider",
     "drone",
     "quadcopter",
@@ -18,14 +19,15 @@
     "flight"
   ],
   "author": {
-    "name": "Jack Watson-Hamblin",
-    "email": "info@fluffyjack.com",
-    "web": "https://motioninmotion.tv/"
+    "name": "Jon Gear",
+    "email": "askjon@jongear.io",
+    "url": "http://jongear.io"
   },
   "maintainers": [
     {
       "name": "Jon Gear",
-      "email": "askjon@jongear.io"
+      "email": "askjon@jongear.io",
+      "url": "http://jongear.io"
     },
     {
       "name": "Jack Watson-Hamblin",
@@ -38,7 +40,7 @@
     {
       "name": "Chris Taylor",
       "email": "christhebaron@gmail.com",
-      "web": "http://christhebaron.co.uk"
+      "url": "http://christhebaron.co.uk"
     },
     {
       "name": "Linda Nichols",
@@ -47,7 +49,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:jongear/minidrone-ble.git"
+    "url": "git@github.com:jongear/minidrone.git"
   },
   "license": "MIT",
   "os": [
@@ -57,7 +59,7 @@
     "android"
   ],
   "bugs": {
-    "url": "https://github.com/jongear/minidrone-ble/issues"
+    "url": "https://github.com/jongear/minidrone/issues"
   },
   "scripts": {
     "commit": "git-cz",
@@ -114,7 +116,6 @@
   },
   "dependencies": {
     "debug": "^2.1.1",
-    "keypress": "^0.2.1",
     "lodash": "^4.17.11",
     "noble": "^1.9.1"
   },
@@ -128,6 +129,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "ghooks": "^2.0.4",
     "jest": "^23.6.0",
+    "keypress": "^0.2.1",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.3",
     "semantic-release": "^15.13.3",

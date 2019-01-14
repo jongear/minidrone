@@ -8,7 +8,7 @@ import DroneStatus from './droneStatus'
 import DroneSteps from './droneSteps'
 // tslint:disable-next-line:ordered-imports
 import noble = require('noble')
-const debug = Debug('rollingspider')
+const debug = Debug('minidrone')
 
 export default class Drone extends EventEmitter {
   public name: string
@@ -30,7 +30,7 @@ export default class Drone extends EventEmitter {
   public ping: any
 
   /**
-   * Constructs a new RollingSpider
+   * Constructs a new Mini Drone
    *
    * @param {Object} options to construct the drone with:
    *  - {String} uuid to connect to. If this is omitted then it will connect to the first device starting with 'RS_' as the local name.
@@ -133,13 +133,13 @@ export default class Drone extends EventEmitter {
    * @todo Make the callback be called with an error if encountered
    */
   public connect(callback) {
-    this.logger('RollingSpider#connect')
+    this.logger('minidrone#connect')
     if (this.targets) {
-      this.logger('RollingSpider finding: ' + this.targets.join(', '))
+      this.logger('minidrone finding: ' + this.targets.join(', '))
     }
 
     this.ble.on('discover', peripheral => {
-      this.logger('RollingSpider.on(discover)')
+      this.logger('minidrone.on(discover)')
       this.logger(peripheral)
 
       let isFound = false
@@ -203,13 +203,13 @@ export default class Drone extends EventEmitter {
     })
 
     if (this.forceConnect || this.ble.state === 'poweredOn') {
-      this.logger('RollingSpider.forceConnect')
+      this.logger('minidrone.forceConnect')
       this.ble.startScanning()
     } else {
-      this.logger('RollingSpider.on(stateChange)')
+      this.logger('minidrone.on(stateChange)')
       this.ble.on('stateChange', state => {
         if (state === 'poweredOn') {
-          this.logger('RollingSpider#poweredOn')
+          this.logger('minidrone#poweredOn')
           this.ble.startScanning()
         } else {
           this.logger('stateChange == ' + state)
@@ -304,7 +304,7 @@ export default class Drone extends EventEmitter {
    * @param callback to be called once disconnected
    */
   public disconnect(callback?: any) {
-    this.logger('RollingSpider#disconnect')
+    this.logger('minidrone#disconnect')
 
     if (this.connected) {
       this.peripheral.disconnect(() => {
@@ -328,7 +328,7 @@ export default class Drone extends EventEmitter {
    * @param callback to be called once the ping is started
    */
   public startPing() {
-    this.logger('RollingSpider#startPing')
+    this.logger('minidrone#startPing')
 
     this.ping = setInterval(() => {
       const buffer = new Buffer(19)
@@ -368,7 +368,7 @@ export default class Drone extends EventEmitter {
    * @param callback to be called once the signal strength has been identified
    */
   public signalStrength(callback) {
-    this.logger('RollingSpider#signalStrength')
+    this.logger('minidrone#signalStrength')
     if (this.connected) {
       this.peripheral.updateRssi(callback)
     } else {
@@ -379,7 +379,7 @@ export default class Drone extends EventEmitter {
   }
 
   public drive(parameters, steps) {
-    this.logger('RollingSpider#drive')
+    this.logger('minidrone#drive')
     this.logger('driveStepsRemaining', this.driveStepsRemaining)
     const params = parameters || {}
     if (!this.driveStepsRemaining || steps < 0) {
@@ -411,7 +411,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#takeOff')
+    this.logger('minidrone#takeOff')
 
     if (this.status.battery < 10) {
       this.logger('!!! BATTERY LEVEL TOO LOW !!!')
@@ -444,7 +444,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#wheelOn')
+    this.logger('minidrone#wheelOn')
     this.writeTo(
       'fa0b',
       // tslint:disable-next-line:no-bitwise
@@ -465,7 +465,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#wheelOff')
+    this.logger('minidrone#wheelOff')
     this.writeTo(
       'fa0b',
       // tslint:disable-next-line:no-bitwise
@@ -485,7 +485,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#land')
+    this.logger('minidrone#land')
     if (this.status.flying) {
       this.writeTo(
         'fa0b',
@@ -493,7 +493,7 @@ export default class Drone extends EventEmitter {
         new Buffer([0x02, ++this.steps.fa0b & 0xff, 0x02, 0x00, 0x03, 0x00])
       )
 
-      this.on('flyingStatusChange', function(newStatus) {
+      this.on('flyingStatusChange', newStatus => {
         if (newStatus === 0) {
           this.status.flying = false
           if (typeof callback === 'function') {
@@ -503,7 +503,7 @@ export default class Drone extends EventEmitter {
       })
     } else {
       this.logger(
-        "Calling RollingSpider#land when it's not in the air isn't going to do anything"
+        "Calling minidrone#land when it's not in the air isn't going to do anything"
       )
       if (callback) {
         callback()
@@ -516,7 +516,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#toggle')
+    this.logger('minidrone#toggle')
     if (this.status.flying) {
       this.land(options, callback)
     } else {
@@ -535,7 +535,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#cutOff')
+    this.logger('minidrone#cutOff')
     this.status.flying = false
     this.writeTo(
       'fa0c',
@@ -551,12 +551,12 @@ export default class Drone extends EventEmitter {
   public calibrate(options, callback) {
     return this.flatTrim(options, callback)
   }
-  public flatTrim(options, callback) {
+  public flatTrim(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#flatTrim')
+    this.logger('minidrone#flatTrim')
     this.writeTo(
       'fa0b',
       // tslint:disable-next-line:no-bitwise
@@ -577,7 +577,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#frontFlip')
+    this.logger('minidrone#frontFlip')
     if (this.status.flying) {
       this.writeTo(
         'fa0b',
@@ -598,7 +598,7 @@ export default class Drone extends EventEmitter {
       )
     } else {
       this.logger(
-        "Calling RollingSpider#frontFlip when it's not in the air isn't going to do anything"
+        "Calling minidrone#frontFlip when it's not in the air isn't going to do anything"
       )
       if (typeof callback === 'function') {
         callback()
@@ -621,7 +621,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#backFlip')
+    this.logger('minidrone#backFlip')
     if (this.status.flying) {
       this.writeTo(
         'fa0b',
@@ -642,7 +642,7 @@ export default class Drone extends EventEmitter {
       )
     } else {
       this.logger(
-        "Calling RollingSpider#backFlip when it's not in the air isn't going to do anything"
+        "Calling minidrone#backFlip when it's not in the air isn't going to do anything"
       )
       if (typeof callback === 'function') {
         callback()
@@ -664,7 +664,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#rightFlip')
+    this.logger('minidrone#rightFlip')
     if (this.status.flying) {
       this.writeTo(
         'fa0b',
@@ -685,7 +685,7 @@ export default class Drone extends EventEmitter {
       )
     } else {
       this.logger(
-        "Calling RollingSpider#rightFlip when it's not in the air isn't going to do anything"
+        "Calling minidrone#rightFlip when it's not in the air isn't going to do anything"
       )
       if (typeof callback === 'function') {
         callback()
@@ -709,7 +709,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    this.logger('RollingSpider#leftFlip')
+    this.logger('minidrone#leftFlip')
     if (this.status.flying) {
       this.writeTo(
         'fa0b',
@@ -730,7 +730,7 @@ export default class Drone extends EventEmitter {
       )
     } else {
       this.logger(
-        "Calling RollingSpider#leftFlip when it's not in the air isn't going to do anything"
+        "Calling minidrone#leftFlip when it's not in the air isn't going to do anything"
       )
       if (typeof callback === 'function') {
         callback()
@@ -900,7 +900,7 @@ export default class Drone extends EventEmitter {
       callback = options
       options = {}
     }
-    // this.logger('RollingSpider#hover');
+    // this.logger('minidrone#hover');
     this.driveStepsRemaining = 0
     this.speeds.roll = 0
     this.speeds.pitch = 0
@@ -925,8 +925,8 @@ export default class Drone extends EventEmitter {
    *
    * @param callback to be called once set up
    */
-  private setup(callback) {
-    this.logger('RollingSpider#setup')
+  public setup(callback?) {
+    this.logger('minidrone#setup')
     this.peripheral.discoverAllServicesAndCharacteristics(
       (error, services, characteristics) => {
         if (error) {
@@ -949,8 +949,8 @@ export default class Drone extends EventEmitter {
    *
    * @param callback to be called once set up
    */
-  private handshake(callback) {
-    this.logger('RollingSpider#handshake')
+  private handshake(callback?) {
+    this.logger('minidrone#handshake')
     ;[
       'fb0f',
       'fb0e',
@@ -1075,14 +1075,14 @@ export default class Drone extends EventEmitter {
       callback = _.noop
     }
 
-    this.logger('RollingSpider#' + name)
+    this.logger('minidrone#' + name)
     if (this.status.flying) {
       options = options || {}
       const speed = options.speed || 50
       const steps = options.steps || 50
       if (!this.validSpeed(speed)) {
         this.logger(
-          'RollingSpider#' + name + 'was called with an invalid speed: ' + speed
+          'minidrone#' + name + 'was called with an invalid speed: ' + speed
         )
         callback()
       } else {
@@ -1093,7 +1093,7 @@ export default class Drone extends EventEmitter {
       }
     } else {
       this.logger(
-        'RollingSpider#' +
+        'minidrone#' +
           name +
           " when it's not in the air isn't going to do anything"
       )

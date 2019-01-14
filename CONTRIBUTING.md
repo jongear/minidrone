@@ -2,7 +2,7 @@
 
 ## Committing
 
-Minidrone-ble is protected by commitizen which will block all commits unless they pass tests and are formatted to `cz-conventional-changelog` standards. You can read more about commitizen [here](https://github.com/commitizen/cz-cli).
+minidrone is protected by commitizen which will block all commits unless they pass tests and are formatted to `cz-conventional-changelog` standards. You can read more about commitizen [here](https://github.com/commitizen/cz-cli).
 
 When ready to commit stage your commits then run `npm run commit` to walk through a curated commit workflow.
 
