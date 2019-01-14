@@ -57,6 +57,9 @@ matrix:
       os: osx
       osx_image: xcode10
       node_js: '10'
+      script:
+        - npm run build
+        - npm run report-coverage
       after_success:
         - semantic-release
 
@@ -71,5 +74,6 @@ before_script:
   - npm run lint
 
 script:
+  - echo "begin scripts"
   - npm run build
   - npm run report-coverage
