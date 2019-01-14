@@ -62,7 +62,7 @@
   "scripts": {
     "commit": "git-cz",
     "dev": "watch 'npm run build' src",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "test:coverage": "jest --coverage",
     "test:clear-cache": "jest --clearCache",
     "test:watch": "npm test -- --watch",

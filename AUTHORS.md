@@ -1,8 +1,8 @@
-# The main contributors of this library
+# The main contributors to this library
 
 - Jon Gear <askjon@jongear.io>
 
-# The main contributors of node-rolling-spider
+# The main contributors to node-rolling-spider
 
 - Jack Watson-Hamblin <info@fluffyjack.com>
 - Chris Williams <voodootikigod@gmail.com>
