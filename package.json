@@ -111,7 +111,8 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.ts",
-      "!src/**/index.ts"
+      "!src/**/index.ts",
+      "!src/eg/**"
     ]
   },
   "dependencies": {
