@@ -116,7 +116,6 @@
   },
   "dependencies": {
     "debug": "^2.1.1",
-    "lodash": "^4.17.11",
     "noble": "^1.9.1"
   },
   "devDependencies": {

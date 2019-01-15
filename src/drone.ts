@@ -1,6 +1,5 @@
 import * as Debug from 'debug'
 import { EventEmitter } from 'events'
-import * as _ from 'lodash'
 import * as util from 'util'
 import DroneDriveOptions from './droneDriveOptions'
 import DroneSpeed from './droneSpeed'
@@ -1058,6 +1057,10 @@ export default class Drone extends EventEmitter {
     return 0 <= speed && speed <= 100
   }
 
+  private isObject(value) {
+    return value && typeof value === 'object' && value.constructor === Object
+  }
+
   private driveBuilder(parameters, possibleOptions, possibleCallback) {
     const name = parameters.name,
       parameterToChange = parameters.parameterToChange
@@ -1066,13 +1069,14 @@ export default class Drone extends EventEmitter {
     scaleFactor = scaleFactor || 1
 
     let options, callback
-    if (_.isPlainObject(possibleOptions)) {
+    if (this.isObject(possibleOptions)) {
       options = possibleOptions
-      callback = _.isFunction(possibleCallback) ? possibleCallback : _.noop
-    } else if (_.isFunction(possibleOptions)) {
+      callback =
+        typeof possibleCallback === 'function' ? possibleCallback : undefined
+    } else if (typeof possibleOptions === 'function') {
       callback = possibleOptions
     } else {
-      callback = _.noop
+      callback = undefined
     }
 
     this.logger('minidrone#' + name)

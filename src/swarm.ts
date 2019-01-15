@@ -1,6 +1,5 @@
 import * as Debug from 'debug'
 import { EventEmitter } from 'events'
-import * as _ from 'lodash'
 import * as util from 'util'
 import { Drone } from '.'
 // tslint:disable-next-line:ordered-imports
@@ -206,7 +205,7 @@ export default class Swarm extends EventEmitter {
   public release(callback) {
     const max = this.members.length
     let count = 0
-    _.forEach(this.members, drone => {
+    for (const drone of this.members) {
       drone.disconnect(() => {
         count++
         if (count === max && callback) {
@@ -214,7 +213,7 @@ export default class Swarm extends EventEmitter {
           callback()
         }
       })
-    })
+    }
 
     if (max === 0 && callback) {
       callback()
@@ -334,7 +333,7 @@ export default class Swarm extends EventEmitter {
     }
     const max = this.members.length
     let count = 0
-    _.forEach(this.members, drone => {
+    for (const drone of this.members) {
       try {
         drone[fn](opts || {}, () => {
           count++
@@ -346,6 +345,6 @@ export default class Swarm extends EventEmitter {
       } catch (e) {
         // handle quietly
       }
-    })
+    }
   }
 }
