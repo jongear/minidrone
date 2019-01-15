@@ -10,6 +10,53 @@ import noble = require('noble')
 const debug = Debug('minidrone')
 
 export default class Drone extends EventEmitter {
+  /**
+   * Drone.isDronePeripheral
+   *
+   * Accepts a BLE peripheral object record and returns true|false
+   * if that record represents a Rolling Spider Drone or not.
+   *
+   * @param  {Object}  peripheral A BLE peripheral record
+   * @return {Boolean}
+   */
+  public static isDronePeripheral(peripheral?: noble.Peripheral): boolean {
+    if (!peripheral) {
+      return false
+    }
+
+    const localName = peripheral.advertisement.localName
+    const manufacturer = peripheral.advertisement.manufacturerData
+    const acceptedNames = [
+      'RS_',
+      'Mars_',
+      'Travis_',
+      'Maclan_',
+      'Mambo_',
+      'Blaze_',
+      'Swat_',
+      'NewZ_',
+    ]
+    const acceptedManufacturers = [
+      '4300cf1900090100',
+      '4300cf1909090100',
+      '4300cf1907090100',
+      '4300cf190a090100',
+    ]
+
+    const localNameMatch =
+      localName &&
+      acceptedNames.findIndex(name => {
+        return localName.startsWith(name)
+      }) >= 0
+
+    const manufacturerMatch =
+      manufacturer &&
+      acceptedManufacturers.indexOf(manufacturer.toString('hex')) >= 0
+
+    // Is true for EITHER a valid name prefix OR manufacturer code.
+    return localNameMatch || manufacturerMatch
+  }
+
   public name: string
   public uuid: string
   public targets: string[]
@@ -73,53 +120,6 @@ export default class Drone extends EventEmitter {
     })
   }
 
-  /**
-   * Drone.isDronePeripheral
-   *
-   * Accepts a BLE peripheral object record and returns true|false
-   * if that record represents a Rolling Spider Drone or not.
-   *
-   * @param  {Object}  peripheral A BLE peripheral record
-   * @return {Boolean}
-   */
-  public isDronePeripheral(peripheral?: noble.Peripheral): boolean {
-    if (!peripheral) {
-      return false
-    }
-
-    const localName = peripheral.advertisement.localName
-    const manufacturer = peripheral.advertisement.manufacturerData
-    const acceptedNames = [
-      'RS_',
-      'Mars_',
-      'Travis_',
-      'Maclan_',
-      'Mambo_',
-      'Blaze_',
-      'Swat_',
-      'NewZ_',
-    ]
-    const acceptedManufacturers = [
-      '4300cf1900090100',
-      '4300cf1909090100',
-      '4300cf1907090100',
-      '4300cf190a090100',
-    ]
-
-    const localNameMatch =
-      localName &&
-      acceptedNames.findIndex(name => {
-        return localName.startsWith(name)
-      }) >= 0
-
-    const manufacturerMatch =
-      manufacturer &&
-      acceptedManufacturers.indexOf(manufacturer.toString('hex')) >= 0
-
-    // Is true for EITHER a valid name prefix OR manufacturer code.
-    return localNameMatch || manufacturerMatch
-  }
-
   // create client helper function to match ar-drone
   public createClient(options) {
     return new Drone(options)
@@ -150,7 +150,7 @@ export default class Drone extends EventEmitter {
       const uuid = peripheral.uuid
 
       // Is this peripheral a Parrot Rolling Spider?
-      const isDrone = this.isDronePeripheral(peripheral)
+      const isDrone = Drone.isDronePeripheral(peripheral)
 
       const onConnected = error => {
         if (connectedRun) {
@@ -405,7 +405,7 @@ export default class Drone extends EventEmitter {
   public takeoff(options, callback) {
     return this.takeOff(options, callback)
   }
-  public takeOff(options, callback) {
+  public takeOff(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -479,7 +479,7 @@ export default class Drone extends EventEmitter {
    * Instructs the drone to land if it's in the air.
    */
 
-  public land(options, callback) {
+  public land(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -526,7 +526,7 @@ export default class Drone extends EventEmitter {
   /**
    * Instructs the drone to do an emergency landing.
    */
-  public emergency(options, callback) {
+  public emergency(options?, callback?) {
     return this.cutOff(options, callback)
   }
   public cutOff(options, callback?) {
@@ -571,7 +571,7 @@ export default class Drone extends EventEmitter {
    *
    */
 
-  public frontFlip(options, callback) {
+  public frontFlip(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -615,7 +615,7 @@ export default class Drone extends EventEmitter {
    *
    */
 
-  public backFlip(options, callback) {
+  public backFlip(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -658,7 +658,7 @@ export default class Drone extends EventEmitter {
    * It will only do this if it's in the air
    *
    */
-  public rightFlip(options, callback) {
+  public rightFlip(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -703,7 +703,7 @@ export default class Drone extends EventEmitter {
    *
    */
 
-  public leftFlip(options, callback) {
+  public leftFlip(options?, callback?) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -747,7 +747,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public up(options: DroneDriveOptions, callback: any) {
+  public up(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'up',
@@ -765,7 +765,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public down(options: DroneDriveOptions, callback: any) {
+  public down(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'down',
@@ -784,7 +784,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur. 0-100 values.
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public forward(options: DroneDriveOptions, callback: any) {
+  public forward(options?: DroneDriveOptions, callback?: any) {
     return this.driveBuilder(
       {
         name: 'forward',
@@ -802,7 +802,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public backward(options: DroneDriveOptions, callback: any) {
+  public backward(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'backward',
@@ -824,7 +824,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public turnRight(options: DroneDriveOptions, callback: any) {
+  public turnRight(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'turnRight',
@@ -845,7 +845,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public turnLeft(options: DroneDriveOptions, callback: any) {
+  public turnLeft(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'turnLeft',
@@ -864,7 +864,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public tiltRight(options: DroneDriveOptions, callback: any) {
+  public tiltRight(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'tiltRight',
@@ -882,7 +882,7 @@ export default class Drone extends EventEmitter {
    * @param {float} options.speed at which the drive should occur
    * @param {float} options.steps the length of steps (time) the drive should happen
    */
-  public tiltLeft(options: DroneDriveOptions, callback: any) {
+  public tiltLeft(options?: DroneDriveOptions, callback?: any) {
     this.driveBuilder(
       {
         name: 'tiltLeft',
