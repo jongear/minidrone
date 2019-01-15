@@ -121,7 +121,7 @@ export default class Swarm extends EventEmitter {
     }
   }
 
-  public assemble(callback) {
+  public assemble(callback?) {
     this.logger('minidrone.Swarm#assemble')
 
     this.once('assembled', () => {
@@ -310,11 +310,11 @@ export default class Swarm extends EventEmitter {
   public right(options?, callback?) {
     this.tiltRight(options, callback)
   }
-  public titleLeft(options?, callback?) {
+  public tiltLeft(options?, callback?) {
     this.broadcast('tiltLeft', options, callback)
   }
   public left(options?, callback?) {
-    this.titleLeft(options, callback)
+    this.tiltLeft(options, callback)
   }
 
   public hover(options?, callback?) {

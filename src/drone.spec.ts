@@ -7,8 +7,7 @@ jest.mock('noble', () => ({
 describe('Drone', () => {
   describe('isDronePeripheral', () => {
     it('returns false if no peripheral record', () => {
-      const drone = new Drone()
-      expect(drone.isDronePeripheral()).toBeFalsy()
+      expect(Drone.isDronePeripheral()).toBeFalsy()
     })
 
     it('returns true if peripheral.advertisement.localName begins with "RS_"', () => {
@@ -18,8 +17,7 @@ describe('Drone', () => {
         },
       }
 
-      const drone = new Drone()
-      expect(drone.isDronePeripheral(peripheral)).toBeTruthy()
+      expect(Drone.isDronePeripheral(peripheral)).toBeTruthy()
     })
 
     it('returns true if peripheral.advertisement.localName begins with "Mambo_"', () => {
@@ -29,8 +27,7 @@ describe('Drone', () => {
         },
       }
 
-      const drone = new Drone()
-      expect(drone.isDronePeripheral(peripheral)).toBeTruthy()
+      expect(Drone.isDronePeripheral(peripheral)).toBeTruthy()
     })
 
     it('returns true if peripheral.advertisement.manufacturerData is correct', () => {
@@ -49,8 +46,7 @@ describe('Drone', () => {
         },
       }
 
-      const drone = new Drone()
-      expect(drone.isDronePeripheral(peripheral)).toBeTruthy()
+      expect(Drone.isDronePeripheral(peripheral)).toBeTruthy()
     })
 
     it('returns true if custom name, but peripheral.advertisement.manufacturerData is correct', () => {
@@ -70,8 +66,7 @@ describe('Drone', () => {
         },
       }
 
-      const drone = new Drone()
-      expect(drone.isDronePeripheral(peripheral)).toBeTruthy()
+      expect(Drone.isDronePeripheral(peripheral)).toBeTruthy()
     })
   })
 })
