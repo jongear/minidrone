@@ -9,7 +9,8 @@
     "no-empty": false,
     "object-literal-shorthand": false,
     "object-literal-sort-keys": false,
-    "one-variable-per-declaration": false
+    "one-variable-per-declaration": false,
+    "no-implicit-dependencies": [true, ["keypress", "temporal"]]
   },
   "rulesDirectory": []
 }
