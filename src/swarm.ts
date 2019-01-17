@@ -3,7 +3,7 @@ import { EventEmitter } from 'events'
 import * as util from 'util'
 import { Drone } from '.'
 // tslint:disable-next-line:ordered-imports
-import noble = require('noble')
+import noble = require('noble-mac')
 const debug = Debug('minidrone')
 
 export default class Swarm extends EventEmitter {

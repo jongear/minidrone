@@ -1,6 +1,6 @@
 import Drone from './drone'
 
-jest.mock('noble', () => ({
+jest.mock('noble-mac', () => ({
   on: jest.fn(),
 }))
 

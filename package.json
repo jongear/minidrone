@@ -117,7 +117,7 @@
   },
   "dependencies": {
     "debug": "^2.1.1",
-    "noble": "^1.9.1"
+    "noble-mac": "https://github.com/Timeular/noble-mac.git"
   },
   "devDependencies": {
     "@types/debug": "0.0.31",
@@ -140,11 +140,5 @@
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.2.2",
     "watch": "^1.0.2"
-  },
-  "optionalDependencies": {
-    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
-  },
-  "resolutions": {
-    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
   }
 }
