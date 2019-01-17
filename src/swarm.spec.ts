@@ -1,6 +1,6 @@
 import Swarm from './swarm'
 
-jest.mock('noble', () => ({
+jest.mock('noble-mac', () => ({
   on: jest.fn(),
 }))
 

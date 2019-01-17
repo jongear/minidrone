@@ -1,4 +1,4 @@
-import noble = require('noble')
+import noble = require('noble-mac')
 
 let connectedDrone
 const pingValue = 0

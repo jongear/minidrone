@@ -6,7 +6,7 @@ import DroneSpeed from './droneSpeed'
 import DroneStatus from './droneStatus'
 import DroneSteps from './droneSteps'
 // tslint:disable-next-line:ordered-imports
-import noble = require('noble')
+import noble = require('noble-mac')
 const debug = Debug('minidrone')
 
 export default class Drone extends EventEmitter {
