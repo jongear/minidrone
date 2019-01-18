@@ -41,6 +41,7 @@ export default class Drone extends EventEmitter {
       '4300cf1909090100',
       '4300cf1907090100',
       '4300cf190a090100',
+      '4300cf190b090100',
     ]
 
     const localNameMatch =
@@ -49,9 +50,12 @@ export default class Drone extends EventEmitter {
         return localName.startsWith(name)
       }) >= 0
 
-    const manufacturerMatch =
-      manufacturer &&
-      acceptedManufacturers.indexOf(manufacturer.toString('hex')) >= 0
+    let manufacturerMatch = false
+
+    if (manufacturer) {
+      const hexManufacturer = manufacturer.toString('hex')
+      manufacturerMatch = acceptedManufacturers.indexOf(hexManufacturer) >= 0
+    }
 
     // Is true for EITHER a valid name prefix OR manufacturer code.
     return localNameMatch || manufacturerMatch

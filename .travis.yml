@@ -39,21 +39,25 @@ matrix:
     ########
 
     - name: '[OSX] Node.js v6.x'
+      sudo: required
       os: osx
       osx_image: xcode9.3
       node_js: '6'
 
     - name: '[OSX] Node.js v8.x'
+      sudo: required
       os: osx
       osx_image: xcode9.3
       node_js: '8'
 
     - name: '[OSX] Node.js v10.x xcode` 9.3'
+      sudo: required
       os: osx
       osx_image: xcode9.3
       node_js: '10'
 
     - name: '[OSX] Node.js v10.x xcode10'
+      sudo: required
       os: osx
       osx_image: xcode10
       node_js: '10'
@@ -63,6 +67,35 @@ matrix:
       after_success:
         - 'echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
         - semantic-release
+
+    ###########
+    # Windows #
+    ###########
+    # Travis builds are failing on windows when adding secret environment variables
+    # this is due to a naming issue with nvs
+    # https://travis-ci.community/t/windows-instances-hanging-before-install/250/15
+    #
+    # - name: '[Windows] Node.js v6.x'
+    #   sudo: required
+    #   os: windows
+    #   env: TARGET_ARCH=x64
+    #   node_js: '6'
+    #   before_install:
+    #     - npm install --global --production windows-build-tools
+    # - name: '[Windows] Node.js v8.x'
+    #   sudo: required
+    #   os: windows
+    #   env: TARGET_ARCH=x64
+    #   node_js: '8'
+    #   before_install:
+    #     - npm install --global --production windows-build-tools
+    # - name: '[Windows] Node.js v10.x'
+    #   sudo: required
+    #   os: windows
+    #   env: TARGET_ARCH=x64
+    #   node_js: '10'
+    #   before_install:
+    #     - npm install --global --production windows-build-tools
 
 branches:
   only:
