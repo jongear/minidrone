@@ -64,6 +64,28 @@ matrix:
         - 'echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
         - semantic-release
 
+    ###########
+    # Windows #
+    ###########
+
+    - name: 'Windows'
+      os: windows
+      node_js: '6'
+      before_install:
+        - npm install --global --production windows-build-tools
+
+    - name: 'Windows'
+      os: windows
+      node_js: '8'
+      before_install:
+        - npm install --global --production windows-build-tools
+
+    - name: 'Windows'
+      os: windows
+      node_js: '10'
+      before_install:
+        - npm install --global --production windows-build-tools
+
 branches:
   only:
     - master
