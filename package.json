@@ -68,7 +68,6 @@
     "test:coverage": "jest --coverage",
     "test:clear-cache": "jest --clearCache",
     "test:watch": "npm test -- --watch",
-    "report-coverage": "npm run test:coverage && cat ./coverage/lcov.info | codecov",
     "validate": "npm run test:coverage",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:watch": "watch 'npm run lint'",
@@ -76,8 +75,8 @@
     "build": "tsc"
   },
   "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=4.0.0"
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
   },
   "config": {
     "ghooks": {
@@ -124,7 +123,6 @@
     "@types/events": "^1.2.0",
     "@types/jest": "^23.3.12",
     "@types/noble": "0.0.38",
-    "codecov": "^3.1.0",
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
     "ghooks": "^2.0.4",

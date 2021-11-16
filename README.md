@@ -2,7 +2,7 @@
 
 # Mini Drone for Node.js
 
-[![build status](https://travis-ci.com/jongear/minidrone.svg?branch=master)](https://travis-ci.com/jongear/minidrone) [![codecov](https://codecov.io/gh/jongear/minidrone/branch/master/graph/badge.svg)](https://codecov.io/gh/jongear/minidrone) [![downloads](https://img.shields.io/npm/dt/minidrone.svg)](https://www.npmjs.com/package/minidrone) [![Contributor count](https://img.shields.io/github/contributors/jongear/minidrone.svg)](https://github.com/jongear/minidrone/graphs/contributors)
+[![GitHub Actions build status](https://github.com/jongear/minidrone/actions/workflows/main.yml/badge.svg)](https://github.com/jongear/minidrone/actions?query=branch:master) [![downloads](https://img.shields.io/npm/dt/minidrone.svg)](https://www.npmjs.com/package/minidrone) [![Contributor count](https://img.shields.io/github/contributors/jongear/minidrone.svg)](https://github.com/jongear/minidrone/graphs/contributors)
 
 An implementation of the networking protocols (Bluetooth LE) used by the
 Parrot MiniDrone - [Rolling Spider](http://www.parrot.com/usa/products/minidrone/) and [Airborne Night Drone - MACLANE](http://www.parrot.com/usa/products/airborne-night-drone/). This offers an off-the-shelf \$99 USD drone that can be controlled by JS -- yay!
