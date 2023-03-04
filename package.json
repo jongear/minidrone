@@ -123,7 +123,7 @@
     "@types/events": "^1.2.0",
     "@types/jest": "^23.3.12",
     "@types/noble": "0.0.38",
-    "commitizen": "^3.0.5",
+    "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^2.1.0",
     "ghooks": "^2.0.4",
     "jest": "^23.6.0",
